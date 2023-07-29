@@ -1,0 +1,42 @@
+#! groovy
+propperties([disableConcurrentBuilds()])
+
+pipeline{
+    agent{
+        label "master"
+    }
+        options{
+            buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+            timestamps()
+        }
+    stages{
+        stage("First step"){
+            steps{
+                echo "========executing First step========"
+                sh 'ssh root@vubuntu.lan \'hostname\''
+            }
+//           post{
+//               always{
+//                   echo "========always========"
+//               }
+//               success{
+//                   echo "========A executed successfully========"
+//               }
+//               failure{
+//                   echo "========A execution failed========"
+//               }
+//           }
+        }
+    }
+//    post{
+//        always{
+//            echo "========always========"
+//        }
+//        success{
+//            echo "========pipeline executed successfully ========"
+//        }
+//        failure{
+//            echo "========pipeline execution failed========"
+//        }
+//    }
+}
